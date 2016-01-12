@@ -1,0 +1,16 @@
+{
+    "client_id":1234,
+    "start_date":"2016-01-12",
+    "end_date":"2017-1-12",
+    "charge_day":15,
+    "charge_hour":6,
+    "roommates":[
+        {"venmo_username":"roommate-1", "amount":-1234.00},
+        {"venmo_username":"roommate-2", "amount":-1234.00},
+        {"venmo_username":"roommate-3", "amount":-1234.00},
+        {"venmo_username":"roommate-4", "amount":-1234.00}
+    ],
+    "note":" pay up chief",
+    "audience":"public",
+    "cookie":"put venmo cookie here"
+}
