@@ -10,7 +10,7 @@
         {"venmo_username":"roommate-3", "amount":-1234.00},
         {"venmo_username":"roommate-4", "amount":-1234.00}
     ],
-    "note":" pay up chief",
+    "note":" rent - pay up chief",
     "audience":"public",
     "cookie":"put venmo cookie here"
 }
