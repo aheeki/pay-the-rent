@@ -18,7 +18,6 @@ with open('config.json') as json_data_file:
 def get_access_token():
     url='https://api.venmo.com/v1/oauth/authorize?client_id='+str(config['client_id'])+'&scope=make_payments%20access_profile'
     r = requests.get(url)
-
     s = BeautifulSoup(r.text, 'html.parser')
 
     csrftoken2 = ''
@@ -44,7 +43,6 @@ def get_access_token():
         "Accept-Language":"en-US,en;q=0.8",
         "Cookie":str(config['cookie'])   
     }
-
     data = {
         "csrftoken2":csrftoken2,
         "auth_request":auth_request,
@@ -61,12 +59,14 @@ def get_access_token():
 
 
 def collect_rent(access_token):
+    month = datetime.datetime.now().month + 1 # charge for next month
+    month_name = datetime.date(2000, month, 1).strftime("%b").lower() # arbitrary year and day (neither is shown) 
     roommates = config['roommates']
     for roommate in roommates:
         payment = {
             'access_token':access_token,
             'username':str(roommate['venmo_username']),
-            'note':datetime.datetime.now().strftime("%b").lower() + str(config['note']),
+            'note':month_name + str(config['note']),
             'amount':str(roommate['amount']),
             'audience':str(config['audience'])}
         r = requests.post('https://api.venmo.com/v1/payments', data=payment)
