@@ -23,3 +23,6 @@ pay the rent in &lt; 80 lines of code. I use APScheduler and the Venmo API to co
 - [**Logging**](https://docs.python.org/2/library/logging.html) for logging
 - [**BS4**](http://www.crummy.com/software/BeautifulSoup/bs4/doc/) for pulling token out of html form
 - [**APScheduler**](https://apscheduler.readthedocs.org/en/latest/) for cron tasks and kicking off monthly venmo charges
+
+## License
+MIT
