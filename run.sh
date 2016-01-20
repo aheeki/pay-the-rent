@@ -7,8 +7,7 @@ if [ -n "$username" ] && [ -n "$password" ]; then
     source /root/.bash_profile
 
     apt-get update
-    apt-get install -y python-dev
-    apt-get install -y python-pip
+    apt-get install -y python-dev python-pip
     pip install requests logging beautifulsoup4 apscheduler
 
     nohup python pay-the-rent.py &
