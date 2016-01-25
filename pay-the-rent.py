@@ -2,8 +2,10 @@ import requests, os, logging, datetime, json
 from bs4 import BeautifulSoup
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+# initialize the scheduler
 sched = BlockingScheduler()
 
+# logging setup
 logging.basicConfig(filename='payrent.log',
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
@@ -14,6 +16,7 @@ logging.basicConfig(filename='payrent.log',
 with open('config.json') as json_data_file:
     config = json.load(json_data_file)
 
+# the scheduled job
 @sched.scheduled_job('cron', day=int(config['charge_day']), hour=int(config['charge_hour']), start_date=str(config['start_date']), end_date=str(config['end_date']))
 def get_access_token():
     url='https://api.venmo.com/v1/oauth/authorize?client_id='+str(config['client_id'])+'&scope=make_payments%20access_profile'
@@ -27,7 +30,7 @@ def get_access_token():
             csrftoken2 = str(link.get('value'))
         if link.get('name')=='auth_request':
             auth_request = str(link.get('value'))
-
+            
     headers = {
         "Host":"api.venmo.com",
         "Connection":"keep-alive",
@@ -43,6 +46,7 @@ def get_access_token():
         "Accept-Language":"en-US,en;q=0.8",
         "Cookie":str(config['cookie'])   
     }
+    
     data = {
         "csrftoken2":csrftoken2,
         "auth_request":auth_request,
@@ -51,12 +55,9 @@ def get_access_token():
         "password":os.environ.get('VENMO_PASS'),
         "grant":"1"
     }
-
     r2 = requests.post(url, data=data, headers=headers, allow_redirects=False)
     access_token = r2.headers['location'].split('=')[1]
-    
     collect_rent(access_token)
-
 
 def collect_rent(access_token):
     month = datetime.datetime.now().month + 1 # charge for next month
@@ -72,7 +73,6 @@ def collect_rent(access_token):
         r = requests.post('https://api.venmo.com/v1/payments', data=payment)
         logging.info(r)
         logging.info(payment)
-
 
 if __name__ == '__main__':
     # run the cron task
