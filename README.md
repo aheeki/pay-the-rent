@@ -1,5 +1,5 @@
 # pay-the-rent
-pay the rent in &lt; 80 lines of code. I use APScheduler and the Venmo API to collect monthly rent from my roomates.
+cron and venmo api to collect rent from roomates
 
 ## quickstart (ubuntu):
 
